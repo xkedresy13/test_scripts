@@ -1,1 +1,1 @@
-# test_scripts
+testing purposes scripts
