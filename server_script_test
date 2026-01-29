@@ -1,0 +1,32 @@
+-- SERVER SCRIPT TEST (The "Brain" for your Model)
+local Players = game:GetService("Players")
+
+-- This function only works when run as a Server Script
+local function onPlayerAdded(player)
+    local leaderstats = Instance.new("Folder")
+    leaderstats.Name = "leaderstats"
+    leaderstats.Parent = player
+
+    local points = Instance.new("IntValue")
+    points.Name = "TestPoints"
+    points.Value = 0
+    points.Parent = leaderstats
+
+    -- Give 10 points every 5 seconds to prove the server is running it
+    task.spawn(function()
+        while task.wait(5) do
+            points.Value += 10
+            print("Server gave 10 points to: " .. player.Name)
+        end
+    end)
+end
+
+-- Run for anyone already in the game
+for _, player in pairs(Players:GetPlayers()) do
+    onPlayerAdded(player)
+end
+
+-- Run for anyone who joins later
+Players.PlayerAdded:Connect(onPlayerAdded)
+
+print("Mod Logic Loaded: Server-Side Leaderboard Active.")
